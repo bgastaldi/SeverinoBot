@@ -38,7 +38,7 @@ function ConsultaCep($update = array()) {
 
     $mensagem = array();
     if (strlen($update['result']['parameters']['CEP']) == 8) {
-        $dados = json_decode(getPage('https://correiosapi.apphb.com/' . $update['result']['parameters']['CEP']), true);
+        $dados = json_decode(file_get_contents('http://correiosapi.apphb.com/cep/' . $update['result']['parameters']['CEP']), true);
         if (isset($dados['cep'])) {
             $mensagem[] = array(
                 'type' => 0,
@@ -72,18 +72,4 @@ function ConsultaCep($update = array()) {
             )
         )
     );
-}
-
-/*
- * FUNÇÃO CURL
- */
-function getPage($url) {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_ENCODING, "utf8");
-    curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');
-    $output = curl_exec($curl);
-    curl_close($curl);
-    return $output;
 }
