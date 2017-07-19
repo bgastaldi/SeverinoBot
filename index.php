@@ -37,7 +37,7 @@ if (isset($update["result"]["action"])) {
 function ConsultaCep($update = array()) {
 
     $mensagem = array();
-    if (count($update['result']['parameters']['CEP']) == 8) {
+    if (strlen($update['result']['parameters']['CEP']) == 8) {
         $dados = json_decode(file_get_contents('https://correiosapi.apphb.com/' . $update['result']['parameters']['CEP']), true);
         if (isset($dados['cep'])) {
             $mensagem[] = array(
